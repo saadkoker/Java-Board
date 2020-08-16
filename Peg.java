@@ -11,7 +11,14 @@ public class Peg // a class to represent individual peg objects on the users boa
 	{
 		this.filePath = filePath;
 		this.name = name;
-		this.img = drawImage(File filePath);
+		this.img = drawImage(filePath);
+	}
+
+	public Peg()
+	{
+		this.filePath = new File("default.png");
+		this.mame = "default";
+		this.img = drawImage(filePath);
 	}
 
 	public static BufferedImage drawImage(File filePath)
