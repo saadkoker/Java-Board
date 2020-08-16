@@ -6,7 +6,7 @@ public class Tester{
 	
 	public static void main(String[] args){
 		
-		Board board = new Board(10, 10, "Mustafa Nigga");
+		Board board = new Board(10, 10, "No");
 
 		try {
 			Thread.sleep(1100);
