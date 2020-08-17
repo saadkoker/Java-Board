@@ -1,6 +1,7 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
+import java.net.URL;
 
 public class Peg // a class to represent individual peg objects on the users board 
 {
@@ -8,11 +9,16 @@ public class Peg // a class to represent individual peg objects on the users boa
 	private static String name; //the name of the peg
 	private static BufferedImage img; //the image that will be displayed for the peg
 
-	public Peg(File filePath, String name) throws Exception
+	public Peg(File filePath) throws Exception
 	{
 		this.filePath = filePath;
-		this.name = name;
+		//this.name = name;
 		this.img = drawImage(filePath);
+	}
+
+	public Peg(URL url) throws Exception
+	{
+		this.img = webImage(url);
 	}
 
 	public Peg() throws Exception
@@ -26,6 +32,11 @@ public class Peg // a class to represent individual peg objects on the users boa
 	{
 		return ImageIO.read(filePath);
 		
+	}
+
+	public static BufferedImage webImage(URL url) throws Exception
+	{
+		return ImageIO.read(url);
 	}
 
 	public String getName() //returns the name of the users peg
