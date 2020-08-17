@@ -5,8 +5,8 @@ public class Score {
 
 	public Score(String personName, int theScore){
 
-		personName = name;
-		theScore = score;
+		name = personName;
+		score = theScore;
 	}
 	public void setName(String newName){
 
