@@ -34,7 +34,8 @@ public class Board extends JPanel
 	// Colour to use if a match is not found
 	private static final Color DEFAULT_COLOUR = Color.BLACK;
 	
-	private Color[][] grid;
+	//private Color[][] grid;
+	private Peg[][] grid;
 	private Coordinate lastClick;  // How the mouse handling thread communicates to the board where the last click occurred
 	private String message = "";
 	private int numLines = 0;
@@ -73,7 +74,7 @@ public class Board extends JPanel
 		f.setVisible(true);
 		f.setLocationRelativeTo(null);
 
-		this.grid = new Color[cols][rows];
+		this.grid = new Peg[cols][rows];
 		
 		this.addMouseListener(
 			new MouseInputAdapter() 
@@ -255,7 +256,17 @@ public class Board extends JPanel
 		this.repaint();
 	}
 	
-	
+	/**
+	This method will draw custom pegs that the user has created
+
+	 */
+
+	 public void drawPeg(Peg peg, int row, int col, Graphics g)
+	 {
+		g.drawImage(peg.getImage(), row, col, 50, 50, null);
+		repaint();
+	 }
+
 	/** This method will save the value of the colour of the peg in a specific 
 		* spot.  theColour is restricted to 
 		*   "yellow", "blue", "cyan", "green", "pink", "white", "red", "orange"  
