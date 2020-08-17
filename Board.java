@@ -176,11 +176,15 @@ public class Board extends JPanel
 				int deltaY = nextY-curY;
 																	 
 				g.fillRect(curX, curY, deltaX, deltaY);
-				Color curColour = this.grid[i][j];
-				if (curColour != null) // Draw pegs if they exist
+				
+				//Color curColour = this.grid[i][j];
+				Peg curPeg = this.grid[i][j];
+
+				if (curPeg != null) // Draw pegs if they exist
 				{
-					g.setColor(curColour);
-					g.fillOval(curX+deltaX/4, curY+deltaY/4, deltaX/2, deltaY/2);
+					//g.setColor(curColour);
+					//g.fillOval(curX+deltaX/4, curY+deltaY/4, deltaX/2, deltaY/2);
+					g.drawImage(this.grid[i][j].getImage(), curX, curY, 50, 50, null);
 				}
 			}
 		}
@@ -256,11 +260,20 @@ public class Board extends JPanel
 		this.repaint();
 	}
 	
+
 	/**
 	This method will draw custom pegs that the user has created
 
-	 */
+	*/
 
+	public void putPeg(Peg peg, int row, int col)
+	{
+
+		this.grid[col][row] = peg;
+		this.repaint();
+	} 
+
+/*
 	 public void drawPeg(Peg peg, int row, int col, Graphics g)
 	 {
 		g.drawImage(peg.getImage(), row, col, 50, 50, null);
@@ -272,6 +285,7 @@ public class Board extends JPanel
 		*   "yellow", "blue", "cyan", "green", "pink", "white", "red", "orange"  
 		* Otherwise the colour black will be used. 
 		*/
+	/*
 	public void putPeg(String theColour, int row, int col)
 	{
 		this.grid[col][row] = this.convertColour(theColour);
@@ -283,7 +297,7 @@ public class Board extends JPanel
 		this.repaint();
 	}
 	/** Same as putPeg above but for 1D boards
-	 */
+	 
 	public void putPeg(String theColour, int col)
 	{
 		this.putPeg( theColour, 0, col );
@@ -415,24 +429,3 @@ public class Board extends JPanel
 	}
 }
 
-public class Coordinate
-{
-  private int row;
-  private int col;
-  
-  public Coordinate(int theRow, int theCol)
-  {
-    row = theRow;
-    col = theCol;
-  }
-  
-  public int getRow()
-  {
-    return row;
-  }
-    
-  public int getCol()
-  {
-    return col;
-  }
-} 

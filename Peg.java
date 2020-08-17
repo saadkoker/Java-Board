@@ -1,5 +1,6 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
+import javax.imageio.ImageIO;
 
 public class Peg // a class to represent individual peg objects on the users board 
 {
@@ -7,23 +8,24 @@ public class Peg // a class to represent individual peg objects on the users boa
 	private static String name; //the name of the peg
 	private static BufferedImage img; //the image that will be displayed for the peg
 
-	public Peg(File filePath, String name)
+	public Peg(File filePath, String name) throws Exception
 	{
 		this.filePath = filePath;
 		this.name = name;
 		this.img = drawImage(filePath);
 	}
 
-	public Peg()
+	public Peg() throws Exception
 	{
 		this.filePath = new File("default.png");
-		this.mame = "default";
+		this.name = "default";
 		this.img = drawImage(filePath);
 	}
 
-	public static BufferedImage drawImage(File filePath)
+	public static BufferedImage drawImage(File filePath) throws Exception
 	{
-		return ImageIO.read(filePath));
+		return ImageIO.read(filePath);
+		
 	}
 
 	public String getName() //returns the name of the users peg
