@@ -5,9 +5,9 @@ import java.net.URL;
 
 public class Peg // a class to represent individual peg objects on the users board 
 {
-	private static File filePath; //the location that the user wishes to source the peg image from
-	private static String name; //the name of the peg
-	private static BufferedImage img; //the image that will be displayed for the peg
+	private File filePath; //the location that the user wishes to source the peg image from
+	private String name; //the name of the peg
+	private BufferedImage img; //the image that will be displayed for the peg
 
 	public Peg(File filePath) throws Exception
 	{
@@ -15,10 +15,11 @@ public class Peg // a class to represent individual peg objects on the users boa
 		this.img = drawImage(filePath);
 	}
 
-	public Peg(String my_url) throws Exception
+	public Peg(String my_url, String name) throws Exception
 	{
 		URL url = new URL(my_url);
 		this.img = webImage(url);
+		this.name = name;
 	}
 
 	public Peg() throws Exception
@@ -39,10 +40,10 @@ public class Peg // a class to represent individual peg objects on the users boa
 		return ImageIO.read(url);
 	}
 
-	//public String getName() //returns the name of the users peg
-	//{
-	//	return name;
-//	}
+	public String getName() //returns the name of the users peg
+	{
+		return name;
+	}
 
 	public BufferedImage getImage() //returns the image that represents the peg
 	{

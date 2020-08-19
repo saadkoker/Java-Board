@@ -7,19 +7,19 @@ public class Test
 	{
 
 		
-		Peg peggy3 = new Peg();
-		Peg peggy = new Peg("https://lh3.googleusercontent.com/proxy/Q1SZo2U3fGdNE0zJ3AL_BrVeHzQwD_Q5wkl1WyD3bgkegqfry90ou9hZAZFCaRseqlgNSub1ok8wq39hiBuR7NndPu1CHgYetvszsf_aweBPUDwTAg");
+		//Peg peggy3 = new Peg();
+		//Peg peggy = new Peg("https://lh3.googleusercontent.com/proxy/Q1SZo2U3fGdNE0zJ3AL_BrVeHzQwD_Q5wkl1WyD3bgkegqfry90ou9hZAZFCaRseqlgNSub1ok8wq39hiBuR7NndPu1CHgYetvszsf_aweBPUDwTAg");
 		
 		Board board = new Board(10, 10, "MyBoard");
 
 		//URL url = new URL("https://i.redd.it/0mmg7qs06nq21.jpg");
-	
 
 		
 		//board.putPeg(peggy3, 2, 5);
+		
 		board.putPeg(new Peg(), 2, 3);
 		Thread.sleep(1000);
-		board.putPeg(new Peg("https://i.redd.it/0mmg7qs06nq21.jpg"), 3, 6);
+		board.putPeg(new Peg("https://i.redd.it/0mmg7qs06nq21.jpg", "pokePeg"), 3, 6);
 		Thread.sleep(1000);	
 		board.putPeg(new Peg(), 2, 8);
 
