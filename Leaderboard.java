@@ -16,16 +16,20 @@ public class Leaderboard {
 	public void displayLeaderboard(){
 
 		JFrame frame = new JFrame();
-		JPanel panel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
+		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel);
 		frame.setSize(600, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		JLabel nameLabel = new JLabel("Name");
-		JLabel scoreLabel = new JLabel("Score");
-		panel.add(scoreLabel, c.FIRST_LINE_END);
-		panel.add(nameLabel, c.FIRST_LINE_START);
+		JLabel nameLabel = new JLabel("                           Score");
+		JLabel scoreLabel = new JLabel("Name                       ");
+		panel.add(scoreLabel);
+		panel.add(nameLabel);
 		frame.setVisible(true);
+
+		for (Score score : scores) {
+			panel.add(new JLabel(score.getName() + "                             "));
+			panel.add(new JLabel("                            " + score.getScore()));
+		}
 		
 	}
 }
