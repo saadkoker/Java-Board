@@ -12,12 +12,12 @@ public class Peg // a class to represent individual peg objects on the users boa
 	public Peg(File filePath) throws Exception
 	{
 		this.filePath = filePath;
-		//this.name = name;
 		this.img = drawImage(filePath);
 	}
 
-	public Peg(URL url) throws Exception
+	public Peg(String my_url) throws Exception
 	{
+		URL url = new URL(my_url);
 		this.img = webImage(url);
 	}
 
@@ -39,10 +39,10 @@ public class Peg // a class to represent individual peg objects on the users boa
 		return ImageIO.read(url);
 	}
 
-	public String getName() //returns the name of the users peg
-	{
-		return name;
-	}
+	//public String getName() //returns the name of the users peg
+	//{
+	//	return name;
+//	}
 
 	public BufferedImage getImage() //returns the image that represents the peg
 	{

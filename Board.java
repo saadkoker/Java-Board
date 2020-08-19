@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
+import java.awt.image.BufferedImage;
 
 /**  Board GUI for implementation with various games
  *   Author: Kirill Levin, Troy Vasiga, Chris Ingram
@@ -33,6 +34,7 @@ public class Board extends JPanel
 	
 	// Colour to use if a match is not found
 	private static final Color DEFAULT_COLOUR = Color.BLACK;
+	private static Peg curPeg = null;
 	
 	//private Color[][] grid;
 	private Peg[][] grid;
@@ -160,10 +162,12 @@ public class Board extends JPanel
 	
 	private void paintGrid(Graphics g)
 	{
+		
 		for (int i = 0; i < this.grid.length; i++)
 		{
 			for (int j = 0; j < this.grid[i].length; j++)
-			{    
+			{   
+				curPeg = null;
 				if ((i%2 == 0 && j%2 != 0) || (i%2 != 0 && j%2 == 0))
 					g.setColor(GRID_COLOR_A);
 				else
@@ -178,13 +182,14 @@ public class Board extends JPanel
 				g.fillRect(curX, curY, deltaX, deltaY);
 				
 				//Color curColour = this.grid[i][j];
-				Peg curPeg = this.grid[i][j];
+				BufferedImage curImg = this.grid[i][j].getImage();
 
-				if (curPeg != null) // Draw pegs if they exist
+				if (this.grid[i][j] != null) // Draw pegs if they exist
 				{
 					//g.setColor(curColour);
 					//g.fillOval(curX+deltaX/4, curY+deltaY/4, deltaX/2, deltaY/2);
-					g.drawImage(this.grid[i][j].getImage(), curX, curY, 50, 50, null);
+					g.drawImage(curImg, curX+deltaX/4, curY+deltaY/4, deltaX/2, deltaY/2, null);
+					
 				}
 			}
 		}
@@ -266,10 +271,9 @@ public class Board extends JPanel
 
 	*/
 
-	public void putPeg(Peg peg, int row, int col)
+	public void putPeg(Peg myPeg, int row, int col)
 	{
-
-		this.grid[col][row] = peg;
+		this.grid[col][row] = myPeg;
 		this.repaint();
 	} 
 
