@@ -16,7 +16,7 @@ public class Test
 
 		
 		//board.putPeg(peggy3, 2, 5);
-		
+		board.playBackground("background.wav");	
 		board.putPeg(new Peg(), 2, 3);
 		Thread.sleep(1000);
 		board.putPeg(new Peg("https://i.redd.it/0mmg7qs06nq21.jpg", "pokePeg"), 3, 6);
