@@ -167,7 +167,7 @@ public class Board extends JPanel
 		{
 			for (int j = 0; j < this.grid[i].length; j++)
 			{   
-				curPeg = null;
+			
 				if ((i%2 == 0 && j%2 != 0) || (i%2 != 0 && j%2 == 0))
 					g.setColor(GRID_COLOR_A);
 				else
@@ -183,12 +183,14 @@ public class Board extends JPanel
 				
 				//Color curColour = this.grid[i][j];
 				//BufferedImage curImg = this.grid[i][j].getImage();
+				Peg curPeg = this.grid[i][j];
 
-				if (this.grid[i][j] != null) // Draw pegs if they exist
+				if (curPeg != null) // Draw pegs if they exist
 				{
 					//g.setColor(curColour);
 					//g.fillOval(curX+deltaX/4, curY+deltaY/4, deltaX/2, deltaY/2);
-					g.drawImage(this.grid[i][j].getImage(), curX+deltaX/4, curY+deltaY/4, deltaX/2, deltaY/2, null);
+					System.out.println("repainting: " + this.grid[i][j].getName() + " @ " + i + j);
+					g.drawImage(curPeg.getImage(), curX+deltaX/4, curY+deltaY/4, deltaX/2, deltaY/2, null);
 					
 				}
 			}
@@ -273,7 +275,11 @@ public class Board extends JPanel
 
 	public void putPeg(Peg myPeg, int row, int col)
 	{
+		
 		this.grid[col][row] = myPeg;
+		
+		
+		//System.out.println(this.grid[col][row].getName());
 		this.repaint();
 	} 
 
