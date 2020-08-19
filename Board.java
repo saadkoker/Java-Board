@@ -182,13 +182,13 @@ public class Board extends JPanel
 				g.fillRect(curX, curY, deltaX, deltaY);
 				
 				//Color curColour = this.grid[i][j];
-				BufferedImage curImg = this.grid[i][j].getImage();
+				//BufferedImage curImg = this.grid[i][j].getImage();
 
 				if (this.grid[i][j] != null) // Draw pegs if they exist
 				{
 					//g.setColor(curColour);
 					//g.fillOval(curX+deltaX/4, curY+deltaY/4, deltaX/2, deltaY/2);
-					g.drawImage(curImg, curX+deltaX/4, curY+deltaY/4, deltaX/2, deltaY/2, null);
+					g.drawImage(this.grid[i][j].getImage(), curX+deltaX/4, curY+deltaY/4, deltaX/2, deltaY/2, null);
 					
 				}
 			}
