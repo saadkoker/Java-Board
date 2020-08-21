@@ -10,7 +10,6 @@ import java.awt.image.BufferedImage;
 
 public class Board extends JPanel
 {
-
 	private static final int X_DIM = 60;
 	private static final int Y_DIM = 60;
 	private static final int X_OFFSET = 30;
