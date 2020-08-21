@@ -1,10 +1,18 @@
 import java.awt.*;
 import java.awt.event.*;
+
+import javax.sound.sampled.Clip;
+
+import javax.sound.sampled.Clip;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
-/**  Board GUI for implementation with various games
+ /*  Board GUI for implementatin with various games
  *   Author: Kirill Levin, Troy Vasiga, Chris Ingram
  */
 
@@ -416,6 +424,12 @@ public class Board extends JPanel
 	{
 		return this.grid[0].length;
 	}
+	public void playBackground(String fileName){
+
+		Background back = new Background(fileName);
+		back.run();
+
+	}
 	public void vibrate(int shakeLength, int shakeIntensity) { //create method to vibrate the board
 		try { //needed for Thread sleep
 			final int originalX = f.getLocationOnScreen().x; //final because Visual Studio code did it. If it aint broke dont fix it
@@ -434,6 +448,30 @@ public class Board extends JPanel
 		}
 		catch(Exception e) {
 			e.printStackTrace(); //useful for debugging
+		}
+	}
+}
+class Background extends Thread{ //create a new class for multithreading that extends Thread
+
+	private String audioPath = null;
+
+	public Background(String filePath){
+
+		audioPath = filePath;
+	}
+	public void run() { //create run method
+
+		try { //try required as AudioInputStream has unhandled exceptions
+
+			File backgroundSound = new File(audioPath); //initialize sound file
+			AudioInputStream audioInput = AudioSystem.getAudioInputStream(backgroundSound); //access the AudioInputStream and get the input which is the file
+			Clip clip = AudioSystem.getClip(); //create a clip using the AudioSystem
+			clip.open(audioInput); //open the clip
+			clip.start(); //start the clip (no need to clip.loop because it automatically does it)
+			clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+		} catch(Exception e) {
+			e.printStackTrace(); //made for troubleshooting INCASE
 		}
 	}
 }
