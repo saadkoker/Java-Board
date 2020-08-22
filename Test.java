@@ -10,8 +10,10 @@ public class Test
 		//Peg peggy3 = new Peg();
 		//Peg peggy = new Peg("https://lh3.googleusercontent.com/proxy/Q1SZo2U3fGdNE0zJ3AL_BrVeHzQwD_Q5wkl1WyD3bgkegqfry90ou9hZAZFCaRseqlgNSub1ok8wq39hiBuR7NndPu1CHgYetvszsf_aweBPUDwTAg");
 		
-		Board board = new Board(100, 100, "MyBoard");
+		Board board = new Board(10, 10, "MyBoard");
 
+		System.out.println(board.getDirection());
+	
 		//URL url = new URL("https://i.redd.it/0mmg7qs06nq21.jpg");
 
 		//board.putPeg(peggy3, 2, 5);

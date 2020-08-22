@@ -24,7 +24,6 @@ public class Board extends JPanel
 	private static final int GAP = 10;
 	private static final int FONT_SIZE = 16;
 	private static Color TEXT_COLOR = Color.BLACK;
-	private static String direction = "";
 	
 	// Grid colours
 	public static Color GRID_COLOR_A = new Color(84,137,139);
@@ -125,18 +124,20 @@ public class Board extends JPanel
 			{
 				public void keyPressed(KeyEvent e)
 				{
+					String dir = "";
+
 					System.out.println("key pressed");
 					if(e.getKeyCode() == KeyEvent.VK_UP)
-						String dir = "up";
+						dir = "up";
 
 					else if(e.getKeyCode() == KeyEvent.VK_DOWN)
-						String dir = "down";
+						dir = "down";
 
 					else if(e.getKeyCode() == KeyEvent.VK_LEFT)
-						String dir = "left";
+						dir = "left";
 
 					else if(e.getKeyCode() == KeyEvent.VK_RIGHT)
-						String dir = "right";
+						dir = "right";
 			
 					synchronized(Board.this)
 					{
