@@ -11,6 +11,7 @@ import java.io.File;
 
  /*  Board GUI for implementatin with various games
  *   Author: Kirill Levin, Troy Vasiga, Chris Ingram
+ *   Edited by: Saad Koker, Rory Keogh
  */
 
 public class Board extends JPanel
@@ -22,6 +23,7 @@ public class Board extends JPanel
 	private static final double MIN_SCALE = 0.25;
 	private static final int GAP = 10;
 	private static final int FONT_SIZE = 16;
+	private static Color TEXT_COLOR = Color.BLACK;
 	
 	// Grid colours
 	public static Color GRID_COLOR_A = new Color(84,137,139);
@@ -136,7 +138,7 @@ public class Board extends JPanel
 		int y = (int)Math.round((Y_OFFSET+Y_DIM*grid[0].length)*scale + GAP  ) ;
 		
 		g.fillRect(x,y, this.getSize().width, (int)Math.round(GAP+FONT_SIZE*scale) );
-		g.setColor(Color.black);
+		g.setColor(TEXT_COLOR);
 		g.drawString(message, x, y + (int)Math.round(FONT_SIZE*scale));
 	}
 	private void paintText(Graphics g, String color)
@@ -303,6 +305,18 @@ public class Board extends JPanel
 	 */
 	public void displayMessage(String theMessage)
 	{
+		message = theMessage;
+		this.repaint();
+	}
+	public void displayMessage(String theMessage, Color textColor)
+	{
+		message = theMessage;
+		TEXT_COLOR = textColor;
+		this.repaint();
+	}
+	public void displayMessage(String theMessage, String textColor)
+	{
+		TEXT_COLOR = convertColour(textColor);
 		message = theMessage;
 		this.repaint();
 	}
