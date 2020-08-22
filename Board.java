@@ -226,20 +226,35 @@ public class Board extends JPanel
 
 	public void texturePack(String texturePack)
 	{
+		boolean valid = false;
 
-		if(texture == "wood")
+		if(texturePack.equalsIgnoreCase("wood"))
 		{
 			changeBoardColor(new Color(193,161,120), new Color(79,36,18));
+			valid = true;
 		}
-		if(texture == 2)
+		if(texturePack.equalsIgnoreCase("classic"))
 		{
-
+			changeBoardColor(new Color(169,169,169), new Color(220,220,220));
+			valid = true;
 		}
-		if(texture == 3)
+		if(texturePack.equalsIgnoreCase("alien"))
 		{
+			changeBoardColor(new Color(27,146,226), new Color(161, 255, 123));
+			valid = true;
 				
 		}
-		else
+		if(texturePack.equalsIgnoreCase("brainFuck"))
+		{
+			for(int i = 0; i >= 0; i++)
+			{
+				if(i%2 == 0)
+				{
+				changeBoardColor(new Color((int)((Math.random() * 255) + 0), (int)((Math.random() * 255) + 0), (int)((Math.random() * 255) + 0)) , new Color((int)((Math.random() * 255) + 0), (int)((Math.random() * 255) + 0), (int)((Math.random() * 255) + 0)));
+				}
+			}
+		}
+		else if(valid = false)
 		{
 			System.out.println("Error the developer has entered an invalid texture pack parameters");
 		}
