@@ -23,6 +23,8 @@ public class Test
 		Thread.sleep(1000);	
 		board.putPeg(new Peg(), 2, 8);
 
+		board.texturePack(1);
+
 		
 
 
