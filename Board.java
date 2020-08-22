@@ -139,11 +139,23 @@ public class Board extends JPanel
 					else if(e.getKeyCode() == KeyEvent.VK_RIGHT)
 						dir = "right";
 			
+						
 					synchronized(Board.this)
 					{
 						direction = dir;
 						Board.this.notifyAll() ;	
 					}
+				
+				}
+
+				public void keyTyped(KeyEvent e)
+				{
+					//not using this
+				}
+
+				public void KeyReleased(KeyEvent e)
+				{
+					//not using this either
 				}
 			}
 		);
