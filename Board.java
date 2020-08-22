@@ -1,10 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.sound.sampled.Clip;
-
 import javax.sound.sampled.Clip;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.swing.*;
@@ -14,11 +11,11 @@ import java.io.File;
 
  /*  Board GUI for implementatin with various games
  *   Author: Kirill Levin, Troy Vasiga, Chris Ingram
+ *   Edited by: Saad Koker, Rory Keogh
  */
 
 public class Board extends JPanel
 {
-
 	private static final int X_DIM = 60;
 	private static final int Y_DIM = 60;
 	private static final int X_OFFSET = 30;
@@ -26,6 +23,7 @@ public class Board extends JPanel
 	private static final double MIN_SCALE = 0.25;
 	private static final int GAP = 10;
 	private static final int FONT_SIZE = 16;
+	private static Color TEXT_COLOR = Color.BLACK;
 	
 	// Grid colours
 	public static Color GRID_COLOR_A = new Color(84,137,139);
@@ -71,8 +69,8 @@ public class Board extends JPanel
 		JButton resignButton = new JButton("Resign");
 		f.add(tools, BorderLayout.PAGE_START);
 		tools.add(newGame);
-		tools.add(saveGame); 
-		tools.add(openButton);
+		tools.add(saveGame);
+		tools.add(openButton); 
 		this.columns = cols;
 		this.rows = rows;
 		originalWidth = 2*X_OFFSET+X_DIM*cols;
@@ -140,7 +138,7 @@ public class Board extends JPanel
 		int y = (int)Math.round((Y_OFFSET+Y_DIM*grid[0].length)*scale + GAP  ) ;
 		
 		g.fillRect(x,y, this.getSize().width, (int)Math.round(GAP+FONT_SIZE*scale) );
-		g.setColor(Color.black);
+		g.setColor(TEXT_COLOR);
 		g.drawString(message, x, y + (int)Math.round(FONT_SIZE*scale));
 	}
 	private void paintText(Graphics g, String color)
@@ -197,8 +195,8 @@ public class Board extends JPanel
 				{
 					//g.setColor(curColour);
 					//g.fillOval(curX+deltaX/4, curY+deltaY/4, deltaX/2, deltaY/2);
-					System.out.println("repainting: " + this.grid[i][j].getName() + " @ " + i + j);
-					g.drawImage(curPeg.getImage(), curX+deltaX/4, curY+deltaY/4, deltaX/2, deltaY/2, null);
+					//g.drawImage(curPeg.getImage(), curX+deltaX/4, curY+deltaY/4, deltaX/2, deltaY/2, null);
+					g.drawImage(curPeg.getImage(), curX, curY, 60, 60, null);
 					
 				}
 			}
@@ -228,6 +226,43 @@ public class Board extends JPanel
 	 * Convert a String to the corresponding Color defaulting to Black 
 	 * with an invald input
 	 */
+
+	public void texturePack(String texturePack, int duration)
+	{
+		boolean valid = false;
+
+		if(texturePack.equalsIgnoreCase("wood"))
+		{
+			changeBoardColor(new Color(193,161,120), new Color(79,36,18));
+			valid = true;
+		}
+		if(texturePack.equalsIgnoreCase("classic"))
+		{
+			changeBoardColor(new Color(169,169,169), new Color(220,220,220));
+			valid = true;
+		}
+		if(texturePack.equalsIgnoreCase("alien"))
+		{
+			changeBoardColor(new Color(27,146,226), new Color(161, 255, 123));
+			valid = true;
+				
+		}
+		if(texturePack.equalsIgnoreCase("brainFuck"))
+		{
+			for(int i = 0; i < duration; i++)
+			{
+				if(i%2 == 0)
+				{
+				changeBoardColor(new Color((int)((Math.random() * 255) + 0), (int)((Math.random() * 255) + 0), (int)((Math.random() * 255) + 0)) , new Color((int)((Math.random() * 255) + 0), (int)((Math.random() * 255) + 0), (int)((Math.random() * 255) + 0)));
+				}
+			}
+		}
+		else if(valid = false)
+		{
+			System.out.println("Error the developer has entered an invalid texture pack parameters");
+		}
+
+	}
 	private Color convertColour(String theColour)
 	{
 		for( int i=0; i<COLOUR_NAMES.length; i++ )
@@ -248,7 +283,7 @@ public class Board extends JPanel
         GRID_COLOR_A = colorA;
         GRID_COLOR_B = colorB;
         repaint();
-    }
+	}
 	
 	/** The method that draws everything
 	 */
@@ -271,6 +306,18 @@ public class Board extends JPanel
 	 */
 	public void displayMessage(String theMessage)
 	{
+		message = theMessage;
+		this.repaint();
+	}
+	public void displayMessage(String theMessage, Color textColor)
+	{
+		message = theMessage;
+		TEXT_COLOR = textColor;
+		this.repaint();
+	}
+	public void displayMessage(String theMessage, String textColor)
+	{
+		TEXT_COLOR = convertColour(textColor);
 		message = theMessage;
 		this.repaint();
 	}
