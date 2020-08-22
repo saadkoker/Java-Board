@@ -24,6 +24,7 @@ public class Board extends JPanel
 	private static final int GAP = 10;
 	private static final int FONT_SIZE = 16;
 	private static Color TEXT_COLOR = Color.BLACK;
+	private static String direction = "";
 	
 	// Grid colours
 	public static Color GRID_COLOR_A = new Color(84,137,139);
@@ -45,6 +46,7 @@ public class Board extends JPanel
 	//private Color[][] grid;
 	private Peg[][] grid;
 	private Coordinate lastClick;  // How the mouse handling thread communicates to the board where the last click occurred
+	private String direction;
 	private String message = "";
 	private int numLines = 0;
 	private int[][] line = new int[4][100];  // maximum number of lines is 100
@@ -115,6 +117,34 @@ public class Board extends JPanel
 					} /* synchronized */
 				} /* mouseClicked */
 			} /* anonymous MouseInputAdapater */
+		);
+
+		
+		this.addKeyListener(
+			new KeyAdapter()
+			{
+				public void keyPressed(KeyEvent e)
+				{
+					System.out.println("key pressed");
+					if(e.getKeyCode() == KeyEvent.VK_UP)
+						String dir = "up";
+
+					else if(e.getKeyCode() == KeyEvent.VK_DOWN)
+						String dir = "down";
+
+					else if(e.getKeyCode() == KeyEvent.VK_LEFT)
+						String dir = "left";
+
+					else if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+						String dir = "right";
+			
+					synchronized(Board.this)
+					{
+						direction = dir;
+						Board.this.notifyAll() ;	
+					}
+				}
+			}
 		);
 		
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -454,7 +484,29 @@ public class Board extends JPanel
 					returnedClick = new Coordinate(row,col);
 			}
 			return returnedClick;
-	}  
+	}
+	public String getDirection()
+	{	
+		String lastDirection = null;
+		synchronized(this)
+		{
+			direction = null;
+			while(direction == null)
+			{
+				try 
+				{
+					System.out.println("waiting for click");
+					this.wait();	
+				} catch (Exception e) 
+				{
+					//TODO: handle exception
+				}
+
+				lastDirection = direction;
+			}
+		}
+		return lastDirection;
+	}
 	
 	/** Same as getClick above but for 1D boards
 	 */
@@ -523,4 +575,28 @@ class Background extends Thread{ //create a new class for multithreading that ex
 		}
 	}
 }
+
+class Keychecker extends KeyAdapter {
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+        System.out.println("key pressed");
+			
+		if(e.getKeyCode() == KeyEvent.VK_UP)
+			System.out.println("up");
+
+		else if(e.getKeyCode() == KeyEvent.VK_DOWN)
+			System.out.println("down");
+
+		else if(e.getKeyCode() == KeyEvent.VK_LEFT)
+			System.out.println("left");
+
+		else if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+			System.out.println("right");
+
+	}
+}
+
+
 
