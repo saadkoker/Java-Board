@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.lang.Object;
 import java.net.URL;
 
@@ -16,12 +17,19 @@ public class Test
 
 		
 		//board.putPeg(peggy3, 2, 5);
-		board.playBackground("background.wav");	
+		board.playBackground("background.wav");
 		board.putPeg(new Peg(), 2, 3);
 		Thread.sleep(1000);
 		board.putPeg(new Peg("https://i.redd.it/0mmg7qs06nq21.jpg", "pokePeg"), 3, 6);
+		board.displayMessage("Pee poo check");
 		Thread.sleep(1000);	
 		board.putPeg(new Peg(), 2, 8);
+		Thread.sleep(1000);
+		board.displayMessage("Pee poo check", "red");
+		Thread.sleep(1000);	
+		board.displayMessage("Pee poo check", new Color(192, 41, 108));
+		Thread.sleep(1000);	
+		board.displayMessage("LMAO");
 
 		
 
