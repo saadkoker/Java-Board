@@ -84,7 +84,38 @@ public class Board extends JPanel
 		f.setLocationRelativeTo(null);
 
 		this.grid = new Peg[cols][rows];
+
+		KeyAdapter listener = new KeyAdapter() {
 		
+			@Override 
+			public void keyPressed(KeyEvent e)
+				{
+					String dir = "";
+
+					System.out.println("key pressed");
+					if(e.getKeyCode() == KeyEvent.VK_UP)
+						dir = "up";
+
+					else if(e.getKeyCode() == KeyEvent.VK_DOWN)
+						dir = "down";
+
+					else if(e.getKeyCode() == KeyEvent.VK_LEFT)
+						dir = "left";
+
+					else if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+						dir = "right";
+			
+					synchronized(Board.this)
+					{
+						direction = dir;
+						Board.this.notifyAll() ;	
+					}
+				}
+		};
+		
+	
+		this.addKeyListener(listener);
+
 		this.addMouseListener(
 			new MouseInputAdapter() 
 			{
@@ -118,8 +149,9 @@ public class Board extends JPanel
 			} /* anonymous MouseInputAdapater */
 		);
 
-		
+		/*
 		this.addKeyListener(
+
 			new KeyAdapter()
 			{
 				public void keyPressed(KeyEvent e)
@@ -146,8 +178,8 @@ public class Board extends JPanel
 					}
 				}
 			}
-		);
-		
+		);*/
+
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setContentPane( this );
 		f.pack();
@@ -199,7 +231,7 @@ public class Board extends JPanel
 	
 	private void paintGrid(Graphics g)
 	{
-		
+		this.requestFocusInWindow();
 		for (int i = 0; i < this.grid.length; i++)
 		{
 			for (int j = 0; j < this.grid[i].length; j++)
@@ -486,6 +518,7 @@ public class Board extends JPanel
 			}
 			return returnedClick;
 	}
+	
 	public String getDirection()
 	{	
 		String lastDirection = null;
@@ -508,7 +541,6 @@ public class Board extends JPanel
 		}
 		return lastDirection;
 	}
-	
 	/** Same as getClick above but for 1D boards
 	 */
 	public int getPosition()
@@ -574,28 +606,6 @@ class Background extends Thread{ //create a new class for multithreading that ex
 		} catch(Exception e) {
 			e.printStackTrace(); //made for troubleshooting INCASE
 		}
-	}
-}
-
-class Keychecker extends KeyAdapter {
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-        System.out.println("key pressed");
-			
-		if(e.getKeyCode() == KeyEvent.VK_UP)
-			System.out.println("up");
-
-		else if(e.getKeyCode() == KeyEvent.VK_DOWN)
-			System.out.println("down");
-
-		else if(e.getKeyCode() == KeyEvent.VK_LEFT)
-			System.out.println("left");
-
-		else if(e.getKeyCode() == KeyEvent.VK_RIGHT)
-			System.out.println("right");
-
 	}
 }
 
