@@ -195,7 +195,8 @@ public class Board extends JPanel
 				{
 					//g.setColor(curColour);
 					//g.fillOval(curX+deltaX/4, curY+deltaY/4, deltaX/2, deltaY/2);
-					g.drawImage(curPeg.getImage(), curX+deltaX/4, curY+deltaY/4, deltaX/2, deltaY/2, null);
+					//g.drawImage(curPeg.getImage(), curX+deltaX/4, curY+deltaY/4, deltaX/2, deltaY/2, null);
+					g.drawImage(curPeg.getImage(), curX, curY, 60, 60, null);
 					
 				}
 			}
@@ -226,7 +227,7 @@ public class Board extends JPanel
 	 * with an invald input
 	 */
 
-	public void texturePack(String texturePack)
+	public void texturePack(String texturePack, int duration)
 	{
 		boolean valid = false;
 
@@ -248,7 +249,7 @@ public class Board extends JPanel
 		}
 		if(texturePack.equalsIgnoreCase("brainFuck"))
 		{
-			for(int i = 0; i >= 0; i++)
+			for(int i = 0; i < duration; i++)
 			{
 				if(i%2 == 0)
 				{
