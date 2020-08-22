@@ -31,6 +31,8 @@ public class Test
 		Thread.sleep(1000);	
 		board.displayMessage("LMAO");
 
+		board.texturePack(1);
+
 		
 
 

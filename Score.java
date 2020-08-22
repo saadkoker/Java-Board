@@ -1,7 +1,7 @@
 public class Score {
 
-	private static String name = " ";
-	private static int score = 0;
+	private String name = " ";
+	private int score = 0;
 
 	public Score(String personName, int theScore){
 

@@ -1,10 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.sound.sampled.Clip;
-
 import javax.sound.sampled.Clip;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.swing.*;
@@ -72,8 +69,8 @@ public class Board extends JPanel
 		JButton resignButton = new JButton("Resign");
 		f.add(tools, BorderLayout.PAGE_START);
 		tools.add(newGame);
-		tools.add(saveGame); 
-		tools.add(openButton);
+		tools.add(saveGame);
+		tools.add(openButton); 
 		this.columns = cols;
 		this.rows = rows;
 		originalWidth = 2*X_OFFSET+X_DIM*cols;
@@ -198,7 +195,6 @@ public class Board extends JPanel
 				{
 					//g.setColor(curColour);
 					//g.fillOval(curX+deltaX/4, curY+deltaY/4, deltaX/2, deltaY/2);
-					System.out.println("repainting: " + this.grid[i][j].getName() + " @ " + i + j);
 					g.drawImage(curPeg.getImage(), curX+deltaX/4, curY+deltaY/4, deltaX/2, deltaY/2, null);
 					
 				}
@@ -229,6 +225,28 @@ public class Board extends JPanel
 	 * Convert a String to the corresponding Color defaulting to Black 
 	 * with an invald input
 	 */
+
+	public void texturePack(String texturePack)
+	{
+
+		if(texture == "wood")
+		{
+			changeBoardColor(new Color(193,161,120), new Color(79,36,18));
+		}
+		if(texture == 2)
+		{
+
+		}
+		if(texture == 3)
+		{
+				
+		}
+		else
+		{
+			System.out.println("Error the developer has entered an invalid texture pack parameters");
+		}
+
+	}
 	private Color convertColour(String theColour)
 	{
 		for( int i=0; i<COLOUR_NAMES.length; i++ )
@@ -249,7 +267,7 @@ public class Board extends JPanel
         GRID_COLOR_A = colorA;
         GRID_COLOR_B = colorB;
         repaint();
-    }
+	}
 	
 	/** The method that draws everything
 	 */
