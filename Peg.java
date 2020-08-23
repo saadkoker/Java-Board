@@ -9,17 +9,28 @@ public class Peg // a class to represent individual peg objects on the users boa
 	private String name; //the name of the peg
 	private BufferedImage img; //the image that will be displayed for the peg
 
-	public Peg(File filePath) throws Exception
-	{
-		this.filePath = filePath;
-		this.img = drawImage(filePath);
+	public Peg(String file) throws Exception
+	{	
+		try {
+			
+			this.filePath = new File(file);
+			this.img = drawImage(filePath);
+
+		} catch (Exception e) {
+			//TODO: handle exception
+		}
 	}
 
 	public Peg(String my_url, String name) throws Exception
 	{
-		URL url = new URL(my_url);
-		this.img = webImage(url);
-		this.name = name;
+		try {
+			URL url = new URL(my_url);
+			this.img = webImage(url);
+			this.name = name;
+
+		} catch (Exception e) {
+			//TODO: handle exception
+		}
 	}
 
 	public Peg() throws Exception
