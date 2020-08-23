@@ -7,7 +7,8 @@ public class LeaderboardTester {
 		Leaderboard board = new Leaderboard();
 		Random random = new Random();
 		
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 2; i++) {
+
 			board.addScore(new Score("Saad", random.nextInt(100)));
 		}
 		board.displayLeaderboard();

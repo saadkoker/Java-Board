@@ -45,6 +45,7 @@ public class Board extends JPanel
 	//private Color[][] grid;
 	private Peg[][] grid;
 	private Coordinate lastClick;  // How the mouse handling thread communicates to the board where the last click occurred
+	private String direction;
 	private String message = "";
 	private int numLines = 0;
 	private int[][] line = new int[4][100];  // maximum number of lines is 100
@@ -83,7 +84,38 @@ public class Board extends JPanel
 		f.setLocationRelativeTo(null);
 
 		this.grid = new Peg[cols][rows];
+
+		KeyAdapter listener = new KeyAdapter() {
 		
+			@Override 
+			public void keyPressed(KeyEvent e)
+				{
+					String dir = "";
+
+					System.out.println("key pressed");
+					if(e.getKeyCode() == KeyEvent.VK_UP)
+						dir = "up";
+
+					else if(e.getKeyCode() == KeyEvent.VK_DOWN)
+						dir = "down";
+
+					else if(e.getKeyCode() == KeyEvent.VK_LEFT)
+						dir = "left";
+
+					else if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+						dir = "right";
+			
+					synchronized(Board.this)
+					{
+						direction = dir;
+						Board.this.notifyAll() ;	
+					}
+				}
+		};
+		
+	
+		this.addKeyListener(listener);
+
 		this.addMouseListener(
 			new MouseInputAdapter() 
 			{
@@ -116,7 +148,50 @@ public class Board extends JPanel
 				} /* mouseClicked */
 			} /* anonymous MouseInputAdapater */
 		);
-		
+
+		/*
+		this.addKeyListener(
+
+			new KeyAdapter()
+			{
+				public void keyPressed(KeyEvent e)
+				{
+					String dir = "";
+
+					System.out.println("key pressed");
+					if(e.getKeyCode() == KeyEvent.VK_UP)
+						dir = "up";
+
+					else if(e.getKeyCode() == KeyEvent.VK_DOWN)
+						dir = "down";
+
+					else if(e.getKeyCode() == KeyEvent.VK_LEFT)
+						dir = "left";
+
+					else if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+						dir = "right";
+			
+						
+					synchronized(Board.this)
+					{
+						direction = dir;
+						Board.this.notifyAll() ;	
+					}
+				
+				}
+
+				public void keyTyped(KeyEvent e)
+				{
+					//not using this
+				}
+
+				public void KeyReleased(KeyEvent e)
+				{
+					//not using this either
+				}
+			}
+		);*/
+
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setContentPane( this );
 		f.pack();
@@ -168,7 +243,7 @@ public class Board extends JPanel
 	
 	private void paintGrid(Graphics g)
 	{
-		
+		this.requestFocusInWindow();
 		for (int i = 0; i < this.grid.length; i++)
 		{
 			for (int j = 0; j < this.grid[i].length; j++)
@@ -454,8 +529,30 @@ public class Board extends JPanel
 					returnedClick = new Coordinate(row,col);
 			}
 			return returnedClick;
-	}  
+	}
 	
+	public String getDirection()
+	{	
+		String lastDirection = null;
+		synchronized(this)
+		{
+			direction = null;
+			while(direction == null)
+			{
+				try 
+				{
+					System.out.println("waiting for click");
+					this.wait();	
+				} catch (Exception e) 
+				{
+					//TODO: handle exception
+				}
+
+				lastDirection = direction;
+			}
+		}
+		return lastDirection;
+	}
 	/** Same as getClick above but for 1D boards
 	 */
 	public int getPosition()
@@ -523,4 +620,6 @@ class Background extends Thread{ //create a new class for multithreading that ex
 		}
 	}
 }
+
+
 
