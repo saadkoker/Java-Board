@@ -61,7 +61,7 @@ public class Board extends JPanel
 	 */
 	public Board (int rows, int cols, String taskBarName)
 	{
-		super( true );
+		super(true);
 		f = new JFrame(taskBarName);
 		JToolBar tools = new JToolBar(); //creating a toolbox to create a task bar
 		JButton newGame = new JButton("New"); //creating a button for a new game
@@ -78,10 +78,11 @@ public class Board extends JPanel
 		originalHeight = 2*Y_OFFSET+Y_DIM*rows+GAP+FONT_SIZE;
 		
 		this.setPreferredSize( new Dimension( originalWidth, originalHeight ) );
-																					
+		
+		f.setLocationRelativeTo(null);
 		f.setResizable(true);
 		f.setVisible(true);
-		f.setLocationRelativeTo(null);
+		
 
 		this.grid = new Peg[cols][rows];
 
@@ -93,18 +94,7 @@ public class Board extends JPanel
 					String dir = "";
 
 					System.out.println("key pressed");
-					if(e.getKeyCode() == KeyEvent.VK_UP)
-						dir = "up";
-
-					else if(e.getKeyCode() == KeyEvent.VK_DOWN)
-						dir = "down";
-
-					else if(e.getKeyCode() == KeyEvent.VK_LEFT)
-						dir = "left";
-
-					else if(e.getKeyCode() == KeyEvent.VK_RIGHT)
-						dir = "right";
-			
+					dir = e.getKeyText(e.getKeyCode());
 					synchronized(Board.this)
 					{
 						direction = dir;
@@ -362,7 +352,7 @@ public class Board extends JPanel
 	
 	/** The method that draws everything
 	 */
-	public void paintComponent( Graphics g ) 
+	public void paintComponent(Graphics g)  
 	{
 		this.setScale();
 		this.paintGrid(g);
