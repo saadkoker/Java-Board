@@ -21,14 +21,14 @@ public class Tester{
 			} catch (Exception e) {
 				//TODO: handle exception
 			}
-			board.vibrate(10, 50000);
+			board.vibrate(10, 10);
 			board.changeBoardColor("red", "blue");
 			try {
 				Thread.sleep(50);
 			} catch (Exception e) {
 				//TODO: handle exception
 			}
-			board.vibrate(10, 50000);
+			board.vibrate(10, 10);
 			board.changeBoardColor(new Color(0,0,0), new Color(255,255,255));
 		}
 	}

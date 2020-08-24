@@ -139,49 +139,6 @@ public class Board extends JPanel
 			} /* anonymous MouseInputAdapater */
 		);
 
-		/*
-		this.addKeyListener(
-
-			new KeyAdapter()
-			{
-				public void keyPressed(KeyEvent e)
-				{
-					String dir = "";
-
-					System.out.println("key pressed");
-					if(e.getKeyCode() == KeyEvent.VK_UP)
-						dir = "up";
-
-					else if(e.getKeyCode() == KeyEvent.VK_DOWN)
-						dir = "down";
-
-					else if(e.getKeyCode() == KeyEvent.VK_LEFT)
-						dir = "left";
-
-					else if(e.getKeyCode() == KeyEvent.VK_RIGHT)
-						dir = "right";
-			
-						
-					synchronized(Board.this)
-					{
-						direction = dir;
-						Board.this.notifyAll() ;	
-					}
-				
-				}
-
-				public void keyTyped(KeyEvent e)
-				{
-					//not using this
-				}
-
-				public void KeyReleased(KeyEvent e)
-				{
-					//not using this either
-				}
-			}
-		);*/
-
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setContentPane( this );
 		f.pack();
@@ -238,7 +195,6 @@ public class Board extends JPanel
 		{
 			for (int j = 0; j < this.grid[i].length; j++)
 			{   
-			
 				if ((i%2 == 0 && j%2 != 0) || (i%2 != 0 && j%2 == 0))
 					g.setColor(GRID_COLOR_A);
 				else
@@ -252,8 +208,6 @@ public class Board extends JPanel
 																	 
 				g.fillRect(curX, curY, deltaX, deltaY);
 				
-				//Color curColour = this.grid[i][j];
-				//BufferedImage curImg = this.grid[i][j].getImage();
 				Peg curPeg = this.grid[i][j];
 
 				if (curPeg != null) // Draw pegs if they exist
@@ -287,11 +241,6 @@ public class Board extends JPanel
 		}
 	}
 	
-	/**
-	 * Convert a String to the corresponding Color defaulting to Black 
-	 * with an invald input
-	 */
-
 	public void texturePack(String texturePack, int duration)
 	{
 		boolean valid = false;
@@ -328,6 +277,12 @@ public class Board extends JPanel
 		}
 
 	}
+
+	/*
+	 * Convert a String to the corresponding Color defaulting to Black 
+	 * with an invald input
+	 */
+
 	private Color convertColour(String theColour)
 	{
 		for( int i=0; i<COLOUR_NAMES.length; i++ )
@@ -350,7 +305,7 @@ public class Board extends JPanel
         repaint();
 	}
 	
-	/** The method that draws everything
+	/* The method that draws everything
 	 */
 	public void paintComponent(Graphics g)  
 	{
@@ -367,7 +322,7 @@ public class Board extends JPanel
 		this.scale = Math.max( Math.min(width,height), MIN_SCALE ); 
 	}
 	
-	/** Sets the message to be displayed under the board
+	/* Sets the message to be displayed under the board
 	 */
 	public void displayMessage(String theMessage)
 	{
@@ -388,54 +343,15 @@ public class Board extends JPanel
 	}
 	
 
-	/**
-	This method will draw custom pegs that the user has created
-
+	/* This method will draw custom pegs that the user has created
 	*/
 
 	public void putPeg(Peg myPeg, int row, int col)
 	{
-		
-		this.grid[col][row] = myPeg;
-		
-		
-		//System.out.println(this.grid[col][row].getName());
+		this.grid[col][row] = myPeg;		
 		this.repaint();
 	} 
 
-/*
-	 public void drawPeg(Peg peg, int row, int col, Graphics g)
-	 {
-		g.drawImage(peg.getImage(), row, col, 50, 50, null);
-		repaint();
-	 }
-
-	/** This method will save the value of the colour of the peg in a specific 
-		* spot.  theColour is restricted to 
-		*   "yellow", "blue", "cyan", "green", "pink", "white", "red", "orange"  
-		* Otherwise the colour black will be used. 
-		*/
-	/*
-	public void putPeg(String theColour, int row, int col)
-	{
-		this.grid[col][row] = this.convertColour(theColour);
-		this.repaint();
-	}
-	public void putPeg(Color theColor, int row, int col)
-	{
-		this.grid[col][row] = theColor;
-		this.repaint();
-	}
-	/** Same as putPeg above but for 1D boards
-	 
-	public void putPeg(String theColour, int col)
-	{
-		this.putPeg( theColour, 0, col );
-	}
-	public void putPeg(Color theColour, int col)
-	{
-		this.putPeg( theColour, 0, col );
-	}
 	/** Remove a peg from the gameboard.
 	 */
 	public void removePeg(int row, int col)
