@@ -261,7 +261,7 @@ public class Board extends JPanel
 			valid = true;
 				
 		}
-		if(texturePack.equalsIgnoreCase("brainFuck"))
+		if(texturePack.equalsIgnoreCase("brainwave"))
 		{
 			for(int i = 0; i < duration; i++)
 			{

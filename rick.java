@@ -37,8 +37,8 @@ public class Rick
 
 				
 				System.out.println(filePath);
-				board.putPeg(new Peg(new File(filePath)), i - 1, j - 1);
-				board.texturePack("brainfuck", 100);
+				board.putPeg(new Peg(filePath), i - 1, j - 1);
+				board.texturePack("brainwave", 100);
 				Thread.sleep(466);
 				filePath = tempFilePath;
 			}
