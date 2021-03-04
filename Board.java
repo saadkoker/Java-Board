@@ -1,12 +1,10 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.swing.*;
 import javax.swing.event.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 
  /*  Board GUI for implementatin with various games
@@ -61,7 +59,7 @@ public class Board extends JPanel
 	 */
 	public Board (int rows, int cols, String taskBarName)
 	{
-		super(true);
+		super( true );
 		f = new JFrame(taskBarName);
 		JToolBar tools = new JToolBar(); //creating a toolbox to create a task bar
 		JButton newGame = new JButton("New"); //creating a button for a new game
@@ -78,10 +76,10 @@ public class Board extends JPanel
 		originalHeight = 2*Y_OFFSET+Y_DIM*rows+GAP+FONT_SIZE;
 		
 		this.setPreferredSize( new Dimension( originalWidth, originalHeight ) );
-		
-		f.setLocationRelativeTo(null);
+																					
 		f.setResizable(true);
 		f.setVisible(true);
+		f.setLocationRelativeTo(null);
 		
 
 		this.grid = new Peg[cols][rows];
@@ -91,13 +89,14 @@ public class Board extends JPanel
 			@Override 
 			public void keyPressed(KeyEvent e)
 				{
-					String dir = "";
+					int dir = 0;
+					dir = e.getKeyCode();
 
 					System.out.println("key pressed");
-					dir = e.getKeyText(e.getKeyCode());
+			
 					synchronized(Board.this)
 					{
-						direction = dir;
+						direction = KeyEvent.getKeyText(dir);
 						Board.this.notifyAll() ;	
 					}
 				}
@@ -149,6 +148,106 @@ public class Board extends JPanel
 	public Board (int cols, String taskBarName)
 	{
 		this(1, cols, taskBarName);
+	}
+	
+	public Board (int cols)
+	{
+		this(1, cols, "Board");
+	}
+	public Board (int rows, int cols)
+	{
+		super( true );
+		f = new JFrame("Board");
+		JToolBar tools = new JToolBar(); //creating a toolbox to create a task bar
+		JButton newGame = new JButton("New"); //creating a button for a new game
+		JButton saveGame = new JButton("Save"); //used for saving the current board state
+		JButton openButton = new JButton("Open");
+		JButton resignButton = new JButton("Resign");
+		f.add(tools, BorderLayout.PAGE_START);
+		tools.add(newGame);
+		tools.add(saveGame);
+		tools.add(openButton); 
+		this.columns = cols;
+		this.rows = rows;
+		originalWidth = 2*X_OFFSET+X_DIM*cols;
+		originalHeight = 2*Y_OFFSET+Y_DIM*rows+GAP+FONT_SIZE;
+		
+		this.setPreferredSize( new Dimension( originalWidth, originalHeight ) );
+																					
+		f.setResizable(true);
+		f.setVisible(true);
+		f.setLocationRelativeTo(null);
+		
+
+		this.grid = new Peg[cols][rows];
+
+		KeyAdapter listener = new KeyAdapter() {
+		
+			@Override 
+			public void keyPressed(KeyEvent e)
+				{
+					String dir = "";
+
+					System.out.println("key pressed");
+					if(e.getKeyCode() == KeyEvent.VK_UP)
+						dir = "up";
+
+					else if(e.getKeyCode() == KeyEvent.VK_DOWN)
+						dir = "down";
+
+					else if(e.getKeyCode() == KeyEvent.VK_LEFT)
+						dir = "left";
+
+					else if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+						dir = "right";
+			
+					synchronized(Board.this)
+					{
+						direction = dir;
+						Board.this.notifyAll() ;	
+					}
+				}
+		};
+		
+	
+		this.addKeyListener(listener);
+
+		this.addMouseListener(
+			new MouseInputAdapter() 
+			{
+				/** A method that is called when the mouse is clicked
+				 */
+				public void mouseClicked(MouseEvent e) 
+				{ 
+					int x = (int)e.getPoint().getX();
+					int y = (int)e.getPoint().getY();
+			
+					// We need to by synchronized to the parent class so we can wake
+					// up any threads that might be waiting for us
+					synchronized(Board.this) 
+					{
+						int curX = (int)Math.round(X_OFFSET*scale);
+						int curY = (int)Math.round(Y_OFFSET*scale);
+						int nextX = (int)Math.round((X_OFFSET+X_DIM*grid.length)*scale);
+						int nextY = (int)Math.round((Y_OFFSET+Y_DIM*grid[0].length)*scale);
+						
+						// Subtract one from high end so clicks on the black edge
+						// don't yield a row or column outside of board because of
+						// the way the coordinate is calculated.
+						if (x >= curX && y >= curY && x < nextX && y < nextY)
+						{
+							lastClick = new Coordinate(y,x);
+							// Notify any threads that would be waiting for a mouse click
+							Board.this.notifyAll() ;
+						} /* if */
+					} /* synchronized */
+				} /* mouseClicked */
+			} /* anonymous MouseInputAdapater */
+		);
+
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setContentPane( this );
+		f.pack();
 	}
  
 	private void paintText(Graphics g)
@@ -273,7 +372,7 @@ public class Board extends JPanel
 		}
 		else if(valid = false)
 		{
-			System.out.println("Error the developer has entered an invalid texture pack parameters");
+			System.out.println("Error, invalid texture pack parameters");
 		}
 
 	}
@@ -307,7 +406,7 @@ public class Board extends JPanel
 	
 	/* The method that draws everything
 	 */
-	public void paintComponent(Graphics g)  
+	public void paintComponent( Graphics g ) 
 	{
 		this.setScale();
 		this.paintGrid(g);
@@ -367,48 +466,6 @@ public class Board extends JPanel
 		this.grid[col][0] = null;
 		repaint();
 	}
-	 
-	/** Draws a line on the board using the given co-ordinates as endpoints
-	 */
-	public void drawLine(int row1, int col1, int row2, int col2)
-	{
-		this.line[0][numLines]=col1;
-		this.line[1][numLines]=row1;
-		this.line[2][numLines]=col2;
-		this.line[3][numLines]=row2;
-		this.numLines++;
-		repaint();
-	}
-
-	/** Removes one line from a board given the co-ordinates as endpoints
-	 * If there is no such line, nothing happens
-	 * If multiple lines, all copies are removed
-	 */
-	
-	public void removeLine(int row1, int col1, int row2, int col2) 
-	{
-		int curLine = 0;
-		while (curLine < this.numLines) 
-		{
-			// Check for either endpoint being specified first in our line table
-			if ( (line[0][curLine] == col1 && line[1][curLine] == row1 &&
-						line[2][curLine] == col2 && line[3][curLine] == row2)   || 
-					 (line[2][curLine] == col1 && line[3][curLine] == row1 &&
-						line[0][curLine] == col2 && line[1][curLine] == row2) )
-			{
-				// found a matching line: overwrite with the last one
-				numLines--;
-				line[0][curLine] = line[0][numLines];
-				line[1][curLine] = line[1][numLines];
-				line[2][curLine] = line[2][numLines];
-				line[3][curLine] = line[3][numLines];
-				curLine--; // perhaps the one we copied is also a match
-			}
-			curLine++;
-		}
-		repaint();
-	}
-	
 	/** Waits for user to click somewhere and then returns the click.
 	 */
 	public Coordinate getClick()

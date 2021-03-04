@@ -5,7 +5,7 @@ public class KeyboardTest{
 		Board board = new Board(10 , 10, "Test");
 
 		while(true){
-			System.out.println(board.getDirection());
+			System.out.println(board.getKeyStroke());
 		//System.out.println(board.getDirection());
 		}
 	}

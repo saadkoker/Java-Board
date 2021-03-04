@@ -2,13 +2,12 @@ import java.lang.Object;
 import java.net.URL;
 import java.io.File;
 
-public class Rick
+public class rick
 {
 	public static void main(String args[]) throws Exception
-	{
+	{	
 		Board board = new Board(10, 10, "ricky");
 		board.playBackground("background.wav");
-
 		String filePath = "rick/rickastley_";
 		String tempFilePath = " ";
 
@@ -16,7 +15,6 @@ public class Rick
 		{	
 			
 			filePath = "rick/rickastley_";
-
 			if(i < 10)
 				filePath = filePath.concat("0" + i + "_");
 
@@ -44,8 +42,7 @@ public class Rick
 			}
 			
 		}
-		
+		board.displayMessage("Rick Astley go brrrrrrrrrrrr", "red");
 		board.vibrate(100, 10);
-
-	}
+	};
 }
